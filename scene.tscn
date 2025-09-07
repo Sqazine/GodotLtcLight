@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkn3rceyvlxbc"]
+
+[ext_resource type="Material" uid="uid://b3ikcxalu8jea" path="res://LtcLightMaterial.tres" id="1_nxogm"]
+[ext_resource type="Material" uid="uid://7d7yifohv6ok" path="res://AreaLightPlaneMaterial.tres" id="2_3253y"]
+[ext_resource type="ArrayMesh" uid="uid://buve1bv42k4ie" path="res://GroundPlaneMesh.tres" id="2_u3cyc"]
+[ext_resource type="ArrayMesh" uid="uid://c8qrnjbk76x13" path="res://LightPlaneMesh.tres" id="4_u3cyc"]
+
+[sub_resource type="Environment" id="Environment_drvgu"]
+background_mode = 1
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_drvgu")
+
+[node name="GroundPlane" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_nxogm")
+mesh = ExtResource("2_u3cyc")
+
+[node name="AreaLightPlane" type="MeshInstance3D" parent="."]
+material_override = ExtResource("2_3253y")
+cast_shadow = 0
+mesh = ExtResource("4_u3cyc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8702096, 0.4926818, 0, -0.4926818, 0.8702096, 0, 4.0174794, 5.998826)

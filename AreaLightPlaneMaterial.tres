@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://7d7yifohv6ok"]
+
+[ext_resource type="Shader" uid="uid://3mig4u0xoo8n" path="res://AreaLightPlaneMaterial.gdshader" id="1_1aswy"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_1aswy")
+shader_parameter/lightColor = Vector3(0.871, 0.722, 0.529)
