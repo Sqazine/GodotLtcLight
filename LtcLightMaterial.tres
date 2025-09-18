@@ -1,8 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://b3ikcxalu8jea"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b3ikcxalu8jea"]
 
 [ext_resource type="Shader" uid="uid://cjy0b0v0hvhy6" path="res://LtcLightMaterial.gdshader" id="1_1gpgu"]
-[ext_resource type="Texture2D" uid="uid://bg5pn71hds1jp" path="res://LTC1.dds" id="2_41tc2"]
-[ext_resource type="Texture2D" uid="uid://bapscpmsdc0lk" path="res://LTC2.dds" id="3_mv3xq"]
 [ext_resource type="Texture2D" uid="uid://cuj8ugaatalyx" path="res://concreteTexture.png" id="4_41tc2"]
 
 [resource]
@@ -15,5 +13,3 @@ shader_parameter/areaLightTwoSided = true
 shader_parameter/areaLightTranslate = Vector3(0, 0, 0)
 shader_parameter/materialDiffuse = ExtResource("4_41tc2")
 shader_parameter/materialAlbedoRoughness = Vector4(0.439, 0.502, 0.565, 0.5)
-shader_parameter/LTC1 = ExtResource("2_41tc2")
-shader_parameter/LTC2 = ExtResource("3_mv3xq")

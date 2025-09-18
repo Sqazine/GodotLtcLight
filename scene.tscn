@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkn3rceyvlxbc"]
+[gd_scene load_steps=7 format=3 uid="uid://bkn3rceyvlxbc"]
 
+[ext_resource type="Script" uid="uid://3b2715el8nky" path="res://LtcGenerator.gd" id="1_3253y"]
 [ext_resource type="Material" uid="uid://b3ikcxalu8jea" path="res://LtcLightMaterial.tres" id="1_nxogm"]
 [ext_resource type="Material" uid="uid://7d7yifohv6ok" path="res://AreaLightPlaneMaterial.tres" id="2_3253y"]
 
@@ -11,6 +12,7 @@ background_mode = 1
 [sub_resource type="PlaneMesh" id="PlaneMesh_ulcgi"]
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_3253y")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_drvgu")
@@ -21,7 +23,7 @@ material_override = ExtResource("1_nxogm")
 mesh = SubResource("PlaneMesh_drvgu")
 
 [node name="AreaLightPlane" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, -2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0.9, -0.74481344)
+transform = Transform3D(0.5, 0, 0, 0, -2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 1.4, -0.745)
 material_override = ExtResource("2_3253y")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_ulcgi")

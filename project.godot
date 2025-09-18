@@ -14,3 +14,7 @@ config/name="LtcLight"
 run/main_scene="uid://bkn3rceyvlxbc"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+LtcData="*res://LtcData.gd"
