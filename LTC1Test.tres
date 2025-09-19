@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://compev2hmjooi"]
+
+[ext_resource type="Shader" uid="uid://ht4kmn620meh" path="res://TestShaderMaterial.gdshader" id="1_wvfmv"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_wvfmv")

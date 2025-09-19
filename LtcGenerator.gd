@@ -1,8 +1,13 @@
+@tool
+
 extends Node
 
 var LTC1Texture:ImageTexture
 var LTC2Texture:ImageTexture
 
+@onready var plane:MeshInstance3D = $Plane
+@onready var LTC1Test:MeshInstance3D = $LTC1Test
+@onready var LTC2Test:MeshInstance3D = $LTC2Test
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var width: int = 64
@@ -20,4 +25,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	plane.material_override.set_shader_parameter("LTC1",LTC1Texture)
+	plane.material_override.set_shader_parameter("LTC2",LTC2Texture)
+	LTC1Test.material_override.set_shader_parameter("materialDiffuse",LTC1Texture)
+	LTC2Test.material_override.set_shader_parameter("materialDiffuse",LTC2Texture)

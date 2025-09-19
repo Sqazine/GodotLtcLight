@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkn3rceyvlxbc"]
+[gd_scene load_steps=10 format=3 uid="uid://bkn3rceyvlxbc"]
 
 [ext_resource type="Script" uid="uid://3b2715el8nky" path="res://LtcGenerator.gd" id="1_3253y"]
 [ext_resource type="Material" uid="uid://b3ikcxalu8jea" path="res://LtcLightMaterial.tres" id="1_nxogm"]
 [ext_resource type="Material" uid="uid://7d7yifohv6ok" path="res://AreaLightPlaneMaterial.tres" id="2_3253y"]
+[ext_resource type="Material" uid="uid://compev2hmjooi" path="res://LTC1Test.tres" id="4_u3cyc"]
+[ext_resource type="Material" uid="uid://dbjfjtnahldqm" path="res://LTC2Test.tres" id="5_m7jmp"]
 
 [sub_resource type="Environment" id="Environment_drvgu"]
 background_mode = 1
@@ -11,6 +13,8 @@ background_mode = 1
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ulcgi"]
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_u3cyc"]
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_3253y")
 
@@ -18,7 +22,7 @@ script = ExtResource("1_3253y")
 environment = SubResource("Environment_drvgu")
 
 [node name="Plane" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0.2947287)
 material_override = ExtResource("1_nxogm")
 mesh = SubResource("PlaneMesh_drvgu")
 
@@ -27,3 +31,16 @@ transform = Transform3D(0.5, 0, 0, 0, -2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-
 material_override = ExtResource("2_3253y")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_ulcgi")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8702096, 0.4926818, 0, -0.4926818, 0.8702096, 0, 4.0174794, 5.998826)
+
+[node name="LTC1Test" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9866457, 0, 0)
+material_override = ExtResource("4_u3cyc")
+mesh = SubResource("PlaneMesh_u3cyc")
+
+[node name="LTC2Test" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7777457, 0, 2.4340687)
+material_override = ExtResource("5_m7jmp")
+mesh = SubResource("PlaneMesh_u3cyc")
