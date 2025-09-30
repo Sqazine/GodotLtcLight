@@ -28,8 +28,8 @@ uniform sampler2D LTC1; // for inverse M
 uniform sampler2D LTC2; // GGX norm, fresnel, 0(unused), sphere
 
 const float LUT_SIZE  = 64.0; // ltc_texture size
-const float LUT_SCALE = (LUT_SIZE - 1.0)/LUT_SIZE;
-const float LUT_BIAS  = 0.5/LUT_SIZE;
+const float LUT_SCALE = (LUT_SIZE - 1.0) / LUT_SIZE;
+const float LUT_BIAS  = 0.5 / LUT_SIZE;
 
 // Vector form without project to the plane (dot with the normal)
 // Use for proxy sphere clipping
@@ -40,13 +40,13 @@ vec3 IntegrateEdgeVec(vec3 v1, vec3 v2)
     float x = dot(v1, v2);
     float y = abs(x);
 
-    float a = 0.8543985 + (0.4965155 + 0.0145206*y)*y;
-    float b = 3.4175940 + (4.1616724 + y)*y;
+    float a = 0.8543985 + (0.4965155 + 0.0145206*y) * y;
+    float b = 3.4175940 + (4.1616724 + y) * y;
     float v = a / b;
 
-    float theta_sintheta = (x > 0.0) ? v : 0.5*inversesqrt(max(1.0 - x*x, 1e-7)) - v;
+    float theta_sintheta = (x > 0.0) ? v : 0.5 * inversesqrt(max(1.0 - x * x, 1e-7)) - v;
 
-    return cross(v1, v2)*theta_sintheta;
+    return cross(v1, v2) * theta_sintheta;
 }
 
 // P is fragPos in world space (LTC distribution)
@@ -120,14 +120,15 @@ const float gamma = 2.2;
 vec3 ToLinear(vec3 v) { return PowVec3(v, gamma); }
 vec3 ToSRGB(vec3 v)   { return PowVec3(v, 1.0/gamma); }
 
-varying vec4 viewPos;
-varying vec4 worldPos;
+varying vec3 viewPos;
+varying vec3 worldPos;
 varying vec3 worldNormal;
+
 void vertex() {
 	// Called for every vertex the material is visible on.
-	worldPos = MODEL_MATRIX * vec4(VERTEX, 1.0);
-	viewPos = VIEW_MATRIX * worldPos;
-	worldNormal = vec4(MODEL_MATRIX * vec4(NORMAL,1.0)).xyz;
+	worldPos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	viewPos = (VIEW_MATRIX * vec4(worldPos,1.0)).xyz;
+	worldNormal = mat3(MODEL_MATRIX) * NORMAL;
 }
 
 void fragment() {
@@ -146,7 +147,7 @@ void fragment() {
 
     // use roughness and sqrt(1-cos_theta) to sample M_texture
     vec2 uv = vec2(materialAlbedoRoughness.w, sqrt(1.0f - dotNV));
-    uv = uv*LUT_SCALE + LUT_BIAS;
+    uv = uv * LUT_SCALE + LUT_BIAS;
 
     // get 4 parameters for inverse_M
     vec4 t1 = texture(LTC1, uv);
@@ -177,7 +178,7 @@ void fragment() {
     specular *= mSpecular * t2.x + (1.0f - mSpecular) * t2.y;
 
     result = areaLightColor * areaLightIntensity * (specular + mDiffuse * diffuse);
-	ALBEDO = ToSRGB(result);
+	ALBEDO = result;
 }
 
 //void light() {

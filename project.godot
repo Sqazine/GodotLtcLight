@@ -12,5 +12,5 @@ config_version=5
 
 config/name="LtcLight"
 run/main_scene="uid://bkn3rceyvlxbc"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
