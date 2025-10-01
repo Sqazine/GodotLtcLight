@@ -2,17 +2,19 @@ shader_type spatial;
 render_mode cull_disabled;
 render_mode unshaded;
 render_mode world_vertex_coords;
-//struct Light
+//struct AreaLight
 //{
     //float intensity;
     //vec3 color;
     //vec3 points[4];
     //bool twoSided;
 //};
-uniform float areaLightIntensity;
-uniform vec3 areaLightColor;
-uniform vec3 areaLightPoints[4];
-uniform bool areaLightTwoSided;
+group_uniforms AreaLight;
+uniform float AreaLightIntensity;
+uniform vec3 AreaLightColor;
+uniform vec3 AreaLightPoints[4];
+uniform bool AreaLightTwoSided;
+group_uniforms;
 
 uniform vec3 areaLightTranslate;
 
@@ -21,8 +23,10 @@ uniform vec3 areaLightTranslate;
     //sampler2D diffuse;
     //vec4 albedoRoughness; // (x,y,z) = color, w = roughness
 //};
-uniform sampler2D materialDiffuse;
-uniform vec4 materialAlbedoRoughness;// (x,y,z) = color, w = roughness
+group_uniforms Material;
+uniform sampler2D MaterialDiffuse;
+uniform vec4 MaterialAlbedoRoughness;// (x,y,z) = color, w = roughness
+group_uniforms;
 
 uniform sampler2D LTC1; // for inverse M
 uniform sampler2D LTC2; // GGX norm, fresnel, 0(unused), sphere
@@ -135,7 +139,7 @@ void fragment() {
 	// Called for every pixel the material is visible on.
 
 	// gamma correction
-    vec3 mDiffuse = texture(materialDiffuse, UV).xyz;// * vec3(0.7f, 0.8f, 0.96f);
+    vec3 mDiffuse = texture(MaterialDiffuse, UV).xyz;// * vec3(0.7f, 0.8f, 0.96f);
     vec3 mSpecular = ToLinear(vec3(0.23f, 0.23f, 0.23f)); // mDiffuse
 
     vec3 result = vec3(0.0f);
@@ -146,7 +150,7 @@ void fragment() {
     float dotNV = clamp(dot(N, V), 0.0f, 1.0f);
 
     // use roughness and sqrt(1-cos_theta) to sample M_texture
-    vec2 uv = vec2(materialAlbedoRoughness.w, sqrt(1.0f - dotNV));
+    vec2 uv = vec2(MaterialAlbedoRoughness.w, sqrt(1.0f - dotNV));
     uv = uv * LUT_SCALE + LUT_BIAS;
 
     // get 4 parameters for inverse_M
@@ -163,21 +167,21 @@ void fragment() {
 
     // translate light source for testing
     vec3 translatedPoints[4];
-    translatedPoints[0] = areaLightPoints[0] + areaLightTranslate;
-    translatedPoints[1] = areaLightPoints[1] + areaLightTranslate;
-    translatedPoints[2] = areaLightPoints[2] + areaLightTranslate;
-    translatedPoints[3] = areaLightPoints[3] + areaLightTranslate;
+    translatedPoints[0] = AreaLightPoints[0] + areaLightTranslate;
+    translatedPoints[1] = AreaLightPoints[1] + areaLightTranslate;
+    translatedPoints[2] = AreaLightPoints[2] + areaLightTranslate;
+    translatedPoints[3] = AreaLightPoints[3] + areaLightTranslate;
 
     // Evaluate LTC shading
-    vec3 diffuse = LTC_Evaluate(N, V, P, mat3(1), translatedPoints, areaLightTwoSided);
-    vec3 specular = LTC_Evaluate(N, V, P, Minv, translatedPoints, areaLightTwoSided);
+    vec3 diffuse = LTC_Evaluate(N, V, P, mat3(1), translatedPoints, AreaLightTwoSided);
+    vec3 specular = LTC_Evaluate(N, V, P, Minv, translatedPoints, AreaLightTwoSided);
 
     // GGX BRDF shadowing and Fresnel
     // t2.x: shadowedF90 (F90 normally it should be 1.0)
     // t2.y: Smith function for Geometric Attenuation Term, it is dot(V or L, H).
     specular *= mSpecular * t2.x + (1.0f - mSpecular) * t2.y;
 
-    result = areaLightColor * areaLightIntensity * (specular + mDiffuse * diffuse);
+    result = AreaLightColor * AreaLightIntensity * (specular + mDiffuse * diffuse);
 	ALBEDO = result;
 }
 
